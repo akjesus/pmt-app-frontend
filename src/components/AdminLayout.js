@@ -24,6 +24,7 @@ import {
   Logout,
   Money,
   Menu as MenuIcon,
+  AccountCircle,
 } from "@mui/icons-material";
 import { Link, Outlet, useLocation, useNavigate } from "react-router-dom";
 
@@ -35,7 +36,6 @@ const menuItems = [
   { text: "Bus Expenses", icon: <Money />, path: "/admin/bus-expenses" },
   { text: "Reports", icon: <BarChart />, path: "/admin/reports" },
   { text: "Fleet Management", icon: <Book />, path: "/admin/fleet-management" },
-
 ];
 
 const AdminLayout = () => {
@@ -51,13 +51,9 @@ const AdminLayout = () => {
     navigate("/login");
   };
 
+  const username = localStorage.getItem("username");
   const drawerContent = (
     <Box sx={{ height: "100%", display: "flex", flexDirection: "column" }}>
-      <Toolbar>
-        <Typography variant="h6" sx={{ color: "white" }}>
-          Admin Menu
-        </Typography>
-      </Toolbar>
       <List>
         {menuItems.map((item) => (
           <ListItem
@@ -97,24 +93,39 @@ const AdminLayout = () => {
 
   return (
     <Box sx={{ display: "flex", height: "100vh" }}>
-      {/* AppBar for mobile */}
-      {isMobile && (
-        <AppBar position="fixed" sx={{ bgcolor: "#f58522ff" }}>
-          <Toolbar sx={{ display: "flex", justifyContent: "space-between" }}>
-            <Typography variant="h6" sx={{ color: "white" }}>
-              Admin Menu
+      {/* AppBar for all screens */}
+      <AppBar
+        position="fixed"
+        sx={{
+          bgcolor: "#f58522ff",
+          zIndex: (theme) => theme.zIndex.drawer + 1,
+        }}
+      >
+        <Toolbar sx={{ display: "flex", justifyContent: "space-between" }}>
+          <Typography variant="h6" sx={{ color: "white" }}>
+            Admin Menu
+          </Typography>
+          <Box sx={{ display: "flex", alignItems: "center" }}>
+            <AccountCircle sx={{ color: "white", mr: 1 }} />
+            <Typography variant="body1" sx={{ color: "white", fontWeight: 500, mr: 2 }}>
+              {username}
             </Typography>
-            <IconButton
+            <Button
+              variant="outlined"
               color="inherit"
-              edge="start"
-              onClick={() => setMobileOpen(!mobileOpen)}
-              sx={{ ml: 1 }}
+              startIcon={<Logout />}
+              onClick={handleLogout}
+              sx={{
+                borderColor: "white",
+                color: "white",
+                ":hover": { borderColor: "#1f1f5c", bgcolor: "#f4f4f422" },
+              }}
             >
-              <MenuIcon />
-            </IconButton>
-          </Toolbar>
-        </AppBar>
-      )}
+              Logout
+            </Button>
+          </Box>
+        </Toolbar>
+      </AppBar>
 
       {/* Sidebar Drawer */}
       <Drawer
@@ -130,6 +141,7 @@ const AdminLayout = () => {
             backgroundColor: "#f58522ff",
             color: "white",
             boxSizing: "border-box",
+            mt: 8, // Move drawer below AppBar
           },
           display: { xs: "block", sm: "block" },
         }}
@@ -144,7 +156,7 @@ const AdminLayout = () => {
           flexGrow: 1,
           bgcolor: "#f4f6f8",
           p: { xs: 1, sm: 3 },
-          pt: isMobile ? 8 : 3,
+          pt: 11, // Add space for AppBar
           display: "flex",
           justifyContent: "center",
           alignItems: "flex-start",

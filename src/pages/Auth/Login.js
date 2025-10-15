@@ -41,10 +41,10 @@ function Login() {
     e.preventDefault();
     try {
       const res = await login(username, password);
-      console.log(res);
       if (res.status === 200) {
         localStorage.setItem("token", res.data.token);
         localStorage.setItem("role", res.data.role);
+        localStorage.setItem("username", res.data.username);
         showSnackbar("Login successful!", "success");
         setTimeout(() => {
           if (res.data.role === "Admin") {

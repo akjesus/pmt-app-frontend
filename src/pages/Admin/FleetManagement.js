@@ -125,7 +125,6 @@ export default function AdminRoutes() {
     const fetchAll = async () => {
       try {
         const townsRes = await getTowns();
-        console.log(townsRes.data)
         setTowns(townsRes.data);
         const routesRes = await getRoutes();
         setRoutes(routesRes.data);
