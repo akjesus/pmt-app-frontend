@@ -1,9 +1,8 @@
 import axios from 'axios';
 
-const BASE_URL = 'http://localhost:8000/api';
+const BASE_URL = process.env.REACT_APP_API_URL || 'http://localhost:8000/api';
 const API_URL = `${BASE_URL}/loading-info`;
 
-// Example: Pass the token in the header for all requests
 const getAuthHeaders = () => ({
   Authorization: `Bearer ${localStorage.getItem('token')}`
 });

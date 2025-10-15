@@ -1,31 +1,30 @@
 import axios from 'axios';
-
-const API_URL = 'http://localhost:8000/api/auth';
+const API_URL = process.env.REACT_APP_API_URL || 'http://localhost:8000/api';
+const AUTH_URL = `${API_URL}/auth`;
+const getAuthHeaders = () => ({
+  Authorization: `Bearer ${localStorage.getItem('token')}`
+});
 
 export const login =  (username, password) => {
-    return axios.post(`${API_URL}/login`, { username, password });
+    return axios.post(`${AUTH_URL}/login`, { username, password });
 };
 
 export const logout = () => {
-  return axios.post(`${API_URL}/logout`);
+  return axios.post(`${AUTH_URL}/logout`);
 };
 
 export const forgotPassword = (email) => {
-  return axios.post(`${API_URL}/forgot-password`, { email });
+  return axios.post(`${AUTH_URL}/forgot-password`, { email });
 };
 
 export const getUsers = () => {
-  return axios.get(`${API_URL}/users`, {
-    headers: {
-        Authorization: `Bearer ${localStorage.getItem('token')}`
-    }
+  return axios.get(`${AUTH_URL}/users`, {
+    headers: getAuthHeaders()
   });
 };
 
 export const addUser = (userData) => {
-  return axios.post(`${API_URL}/register`, userData, {
-    headers: {
-        Authorization: `Bearer ${localStorage.getItem('token')}`
-    }
+  return axios.post(`${AUTH_URL}/register`, userData, {
+    headers: getAuthHeaders()
   });
 }

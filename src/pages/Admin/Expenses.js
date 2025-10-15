@@ -151,7 +151,6 @@ export default function Expenses() {
     try {
       const res = await getBusexpenses(tableBusFrom, tableBusTo, dateFrom, dateTo);
       if (res.status === 200 && res.data.expenses.length > 1){
-        console.log(res.data)
         setExpensesData(res.data.expenses);
       setPage(0);
       showSnackbar("Expenses fetched!", "success");
@@ -161,7 +160,7 @@ export default function Expenses() {
       }
       
     } catch (err) {
-      console.log(err)
+      console.log(err.response);
       setExpensesData([]);
       showSnackbar(err.response.data.error || "Failed to fetch expenses", "error");
     }

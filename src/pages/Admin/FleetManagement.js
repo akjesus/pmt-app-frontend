@@ -125,6 +125,7 @@ export default function AdminRoutes() {
     const fetchAll = async () => {
       try {
         const townsRes = await getTowns();
+        console.log(townsRes.data)
         setTowns(townsRes.data);
         const routesRes = await getRoutes();
         setRoutes(routesRes.data);
@@ -138,7 +139,8 @@ export default function AdminRoutes() {
         setTowns([]);
         setVehicles([]);
         setUsers([]);
-        showSnackbar(err.response?.data?.message || "Failed to get data", "error");
+        console.log(err.response);
+        showSnackbar(err.response?.data || "Failed to get data", "error");
       }
     };
     fetchAll();

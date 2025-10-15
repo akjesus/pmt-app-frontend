@@ -1,39 +1,29 @@
 import axios from "axios";
 
-const API_URL = "http://localhost:8000/api/vehicles";
-
+const API_URL = process.env.REACT_APP_API_URL ? `${process.env.REACT_APP_API_URL}/vehicles` : "http://localhost:8000/api/vehicles";
+const getAuthHeaders = () => ({
+  Authorization: `Bearer ${localStorage.getItem('token')}`
+});
 export const getVehicles =() => {
-    const token = localStorage.getItem("token");
   return axios.get(API_URL, {
-    headers: {
-      Authorization: `Bearer ${token}`,
-    },
+    headers: getAuthHeaders()
   });
 };
 
 export const createVehicle =  (vehicleData) => {
-  const token = localStorage.getItem("token");
   return axios.post(API_URL, vehicleData, {
-    headers: {
-      Authorization: `Bearer ${token}`,
-    },
+    headers: getAuthHeaders()
   });
 };
 
 export const updateVehicle = (id, vehicleData) => {
-  const token = localStorage.getItem("token");
   return axios.put(`${API_URL}/${id}`, vehicleData, {
-    headers: {
-      Authorization: `Bearer ${token}`,
-    },
+    headers: getAuthHeaders()
   });
 };
 
 export const deleteVehicle = (id) => {
-  const token = localStorage.getItem("token");
   return axios.delete(`${API_URL}/${id}`, {
-    headers: {
-      Authorization: `Bearer ${token}`,
-    },
+    headers: getAuthHeaders()
   });
 };
