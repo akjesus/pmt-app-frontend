@@ -298,7 +298,14 @@ export default function ResultManagement() {
           />
           {/* Print to PDF Button */}
           {busPerformanceData.length > 0 && (
-            <Box sx={{ mt: 2, display: "flex", justifyContent: "flex-end" }}>
+            <Box
+              sx={{
+                mt: 2,
+                display: "flex",
+                justifyContent: { xs: "center", sm: "flex-end" },
+                width: "100%",
+              }}
+            >
               <Button
                 variant="outlined"
                 sx={{ bgcolor: "#fff", color: "#2C2C78", borderColor: "#2C2C78" }}
