@@ -24,6 +24,7 @@ import {
   AccountCircle,
 } from "@mui/icons-material";
 import { Link, Outlet, useLocation, useNavigate } from "react-router-dom";
+import MenuIcon from "@mui/icons-material/Menu";
 
 const drawerWidth = 220;
 
@@ -49,44 +50,47 @@ const AdminLayout = () => {
   };
 
   const username = localStorage.getItem("username");
-  const drawerContent = (
-    <Box sx={{ height: "100%", display: "flex", flexDirection: "column" }}>
-      <List>
-        {menuItems.map((item) => (
-          <ListItem
-            button
-            key={item.text}
-            component={Link}
-            to={item.path}
-            onClick={() => isMobile && setMobileOpen(false)}
-            sx={{
-              backgroundColor:
-                location.pathname === item.path ? "#f4f4f4ff" : "transparent",
-              "&:hover": { backgroundColor: "#f4f4f4ff" },
-            }}
-          >
-            <ListItemIcon sx={{ color: "#2C2C78"}}>{item.icon}</ListItemIcon>
-            <ListItemText primary={item.text} />
-          </ListItem>
-        ))}
-      </List>
-      <Box sx={{ flexGrow: 1 }} />
-      <Box sx={{ p: 2 }}>
-        <Button
-          variant="contained"
-          fullWidth
-          startIcon={<Logout />}
-          onClick={handleLogout}
-          sx={{
-            bgcolor: "#2C2C78",
-            ":hover": { bgcolor: "#1f1f5c" },
-          }}
-        >
-          Logout
-        </Button>
-      </Box>
-    </Box>
-  );
+  // const drawerContent = (
+  //   <Box sx={{ height: "100%", display: "flex", flexDirection: "column" }}>
+  //     <List>
+  //       {menuItems.map((item) => (
+  //         <ListItem
+  //           button
+  //           key={item.text}
+  //           component={Link}
+  //           to={item.path}
+  //           onClick={() => isMobile && setMobileOpen(false)}
+  //           sx={{
+  //             backgroundColor:
+  //               location.pathname === item.path ? "#f4f4f4ff" : "transparent",
+  //             "&:hover": { backgroundColor: "#f4f4f4ff" },
+  //           }}
+  //         >
+  //           <ListItemIcon sx={{ color: "#2C2C78" }}>{item.icon}</ListItemIcon>
+  //           <ListItemText primary={item.text} />
+  //         </ListItem>
+  //       ))}
+  //     </List>
+  //     <Box sx={{ flexGrow: 1 }} />
+  //     <Box sx={{ p: 2 }}>
+  //       <Button
+  //         variant="contained"
+  //         fullWidth
+  //         startIcon={<Logout />}
+  //         onClick={handleLogout}
+  //         sx={{
+  //           bgcolor: "#2C2C78",
+  //           ":hover": { bgcolor: "#1f1f5c" },
+  //         }}
+  //       >
+  //         Logout
+  //       </Button>
+  //     </Box>
+  //   </Box>
+  // );
+
+  // Responsive Drawer: Hamburger menu for mobile
+  const handleDrawerToggle = () => setMobileOpen(!mobileOpen);
 
   return (
     <Box sx={{ display: "flex", height: "100vh" }}>
@@ -99,12 +103,32 @@ const AdminLayout = () => {
         }}
       >
         <Toolbar sx={{ display: "flex", justifyContent: "space-between" }}>
-          <Typography variant="h6" sx={{ color: "white" }}>
-            Admin Menu
-          </Typography>
+          <Box sx={{ display: "flex", alignItems: "center" }}>
+            {isMobile && (
+              <Button
+                color="inherit"
+                onClick={handleDrawerToggle}
+                sx={{ minWidth: 0, mr: 2, p: 1 }}
+              >
+                <MenuIcon sx={{ fontSize: 28, color: "white" }} />
+              </Button>
+            )}
+            <Typography variant="h6" sx={{ color: "white" }}>
+              Admin Menu
+            </Typography>
+          </Box>
           <Box sx={{ display: "flex", alignItems: "center" }}>
             <AccountCircle sx={{ color: "white", mr: 1 }} />
-            <Typography variant="body1" sx={{ color: "white", fontWeight: 500, mr: 2 }}>
+            <Typography
+              variant="body1"
+              sx={{
+                color: "white",
+                fontWeight: 500,
+                mr: { xs: 1, sm: 2 },
+                fontSize: { xs: "0.95rem", sm: "1rem" },
+                display: { xs: "none", sm: "block" },
+              }}
+            >
               {username}
             </Typography>
             <Button
@@ -115,10 +139,13 @@ const AdminLayout = () => {
               sx={{
                 borderColor: "white",
                 color: "white",
+                minWidth: { xs: 32, sm: 80 },
+                px: { xs: 1, sm: 2 },
+                fontSize: { xs: "0.8rem", sm: "1rem" },
                 ":hover": { borderColor: "#1f1f5c", bgcolor: "#f4f4f422" },
               }}
             >
-              Logout
+              <span style={{ display: isMobile ? "none" : "inline" }}>Logout</span>
             </Button>
           </Box>
         </Toolbar>
@@ -128,7 +155,7 @@ const AdminLayout = () => {
       <Drawer
         variant={isMobile ? "temporary" : "permanent"}
         open={isMobile ? mobileOpen : true}
-        onClose={() => setMobileOpen(false)}
+        onClose={handleDrawerToggle}
         ModalProps={{ keepMounted: true }}
         sx={{
           width: drawerWidth,
@@ -138,12 +165,61 @@ const AdminLayout = () => {
             backgroundColor: "#f58522ff",
             color: "white",
             boxSizing: "border-box",
-            mt: 8, // Move drawer below AppBar
+            mt: { xs: 7, sm: 8 },
+            height: "100vh",
           },
           display: { xs: "block", sm: "block" },
         }}
       >
-        {drawerContent}
+        <Box
+          sx={{
+            height: "100%",
+            display: "flex",
+            flexDirection: "column",
+            overflowY: "auto",
+          }}
+        >
+          <List>
+            {menuItems.map((item) => (
+              <ListItem
+                button
+                key={item.text}
+                component={Link}
+                to={item.path}
+                onClick={() => isMobile && setMobileOpen(false)}
+                sx={{
+                  backgroundColor:
+                    location.pathname === item.path ? "#f4f4f4ff" : "transparent",
+                  "&:hover": { backgroundColor: "#f4f4f4ff" },
+                  whiteSpace: "nowrap",
+                }}
+              >
+                <ListItemIcon sx={{ color: "#2C2C78" }}>{item.icon}</ListItemIcon>
+                <ListItemText
+                  primary={item.text}
+                  primaryTypographyProps={{
+                    sx: { fontSize: { xs: "0.95rem", sm: "1rem" } },
+                  }}
+                />
+              </ListItem>
+            ))}
+          </List>
+          <Box sx={{ flexGrow: 1 }} />
+          <Box sx={{ p: 2 }}>
+            <Button
+              variant="contained"
+              fullWidth
+              startIcon={<Logout />}
+              onClick={handleLogout}
+              sx={{
+                bgcolor: "#2C2C78",
+                ":hover": { bgcolor: "#1f1f5c" },
+              }}
+            >
+              Logout
+            </Button>
+          </Box>
+        </Box>
       </Drawer>
 
       {/* Main content */}
@@ -153,11 +229,12 @@ const AdminLayout = () => {
           flexGrow: 1,
           bgcolor: "#f4f6f8",
           p: { xs: 1, sm: 3 },
-          pt: 11, // Add space for AppBar
+          pt: { xs: 9, sm: 11 },
           display: "flex",
           justifyContent: "center",
           alignItems: "flex-start",
           minHeight: "100vh",
+          width: "100vw",
         }}
       >
         <Paper
@@ -168,6 +245,7 @@ const AdminLayout = () => {
             minHeight: "80vh",
             borderRadius: 3,
             boxSizing: "border-box",
+            overflowX: "auto",
           }}
         >
           <Outlet />
