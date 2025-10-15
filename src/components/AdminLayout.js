@@ -9,7 +9,6 @@ import {
   Toolbar,
   Paper,
   Button,
-  IconButton,
   AppBar,
   Typography,
   useTheme,
@@ -20,10 +19,8 @@ import {
   BusAlert,
   Book,
   BarChart,
-  Grade,
   Logout,
   Money,
-  Menu as MenuIcon,
   AccountCircle,
 } from "@mui/icons-material";
 import { Link, Outlet, useLocation, useNavigate } from "react-router-dom";

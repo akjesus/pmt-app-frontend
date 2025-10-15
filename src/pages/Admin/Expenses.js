@@ -80,7 +80,7 @@ export default function Expenses() {
   }, [tab]);
 
   const fetchExpenseItems = async () => {
-    setLoadingItems(true);
+    setLoadingItems(() => !loadingItems);
     try {
       const res = await getExpenseItems();
       setAllExpenseItems(res.data.items || []);

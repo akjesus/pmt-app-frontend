@@ -29,6 +29,7 @@ export default function StudentProfile() {
   const handleSave = () => {
     // Later connect this with backend to update student profile
     alert("Profile saved successfully!");
+    setProfileData({ ...profileData });
   };
 
   return (

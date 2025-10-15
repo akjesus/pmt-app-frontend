@@ -739,6 +739,76 @@ export default function AdminRoutes() {
         </DialogActions>
       </Dialog>
 
+      {/* Add Vehicle Modal */}
+      <Dialog
+        open={openVehicle}
+        onClose={handleCloseVehicle}
+        maxWidth="xs"
+        fullWidth={false}
+        PaperProps={{
+          sx: { minWidth: 300, maxWidth: 350 }
+        }}
+      >
+        <DialogTitle>Add Vehicle</DialogTitle>
+        <DialogContent>
+          <TextField
+            fullWidth
+            margin="dense"
+            label="Vehicle Name"
+            name="name"
+            value={newVehicle.name}
+            onChange={handleVehicleChange}
+          />
+          <TextField
+            fullWidth
+            margin="dense"
+            label="Plate Number"
+            name="plateNo"
+            value={newVehicle.plateNo}
+            onChange={handleVehicleChange}
+            sx={{ mt: 2 }}
+          />
+          <TextField
+            fullWidth
+            margin="dense"
+            label="Make"
+            name="vehiclemake"
+            value={newVehicle.vehiclemake}
+            onChange={handleVehicleChange}
+            sx={{ mt: 2 }}
+          />
+          <TextField
+            fullWidth
+            margin="dense"
+            label="Model"
+            name="vehiclemodel"
+            value={newVehicle.vehiclemodel}
+            onChange={handleVehicleChange}
+            sx={{ mt: 2 }}
+          />
+          <TextField
+            fullWidth
+            margin="dense"
+            label="Capacity"
+            name="capacity"
+            type="number"
+            value={newVehicle.capacity}
+            onChange={handleVehicleChange}
+            sx={{ mt: 2 }}
+          />
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handleCloseVehicle}>Cancel</Button>
+          <Button
+            variant="contained"
+            sx={{ bgcolor: "#2C2C78" }}
+            onClick={handleSaveVehicle}
+          >
+            Save
+          </Button>
+        </DialogActions>
+      </Dialog>
+
       {/* Add User Modal */}
       <Dialog
         open={openUser}
